@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listBookFragment">
+
+    <fragment
+        android:id="@+id/listBookFragment"
+        android:name="com.tistory.realapril.mybooks.ui.ListBookFragment"
+        android:label="fragment_list_book"
+        tools:layout="@layout/fragment_list_book" />
+
+    <fragment
+        android:id="@+id/favBookFragment"
+        android:name="com.tistory.realapril.mybooks.ui.FavBookFragment"
+        android:label="fragment_fav_book"
+        tools:layout="@layout/fragment_fav_book" />
+
+</navigation>
