@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tistory.realapril.mybooks.R
 import com.tistory.realapril.mybooks.databinding.FragmentListBookBinding
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
