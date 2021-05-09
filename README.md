@@ -15,6 +15,7 @@ A sample android app that shows list of books and save favorite books.
   - Lifecycle - Create a UI that automatically responds to lifecycle events.
   - ViewModel - UI related data holder, Easily schedule asynchronous tasks for optimal execution.
   - Room - Provides an abstraction layer over SQLite to allow fluent database access.
+  - Data Binding - Bind UI components in layouts to data sources in the app using a declarative format
 - [Koin](https://github.com/InsertKoinIO/koin) - dependency injection.
 - [Retrofit2](https://github.com/square/retrofit) - REST API.
 - [OkHttp3](https://github.com/square/okhttp) - implementing interceptor, logging web server.
