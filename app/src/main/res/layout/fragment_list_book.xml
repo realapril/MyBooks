@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout>
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.tistory.realapril.mybooks.ui.BookViewModel" />
+    </data>
+<androidx.core.widget.NestedScrollView
+    android:id="@+id/scrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ListBookFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    android:background="@color/white"
+    android:fillViewport="true">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="list" />
+        android:padding="16dp"
+        tools:context=".ui.ListBookFragment">
+    <TextView
+            android:id="@+id/tv_numOfLists"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Total : 0"
+            android:textStyle="bold"/>
 
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_concerts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:layout_marginTop="24dp"
+            android:layout_below="@id/tv_numOfLists"/>
+
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
+</layout>

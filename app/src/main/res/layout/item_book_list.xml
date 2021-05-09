@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="item"
+            type="com.tistory.realapril.mybooks.entity.Item" />
+    </data>
+
+    <RelativeLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="70dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="16dp"
+            />
+<!--        app:imagePath="@{item.volumeInfo.imageLinks.thumbnail}"-->
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_toRightOf="@id/iv_thumbnail"
+            android:layout_marginRight="48dp"
+            android:text="@{item.volumeInfo.title}"
+            android:textStyle="bold"
+            tools:text="Title"/>
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:layout_alignLeft="@id/tv_title"
+            android:layout_marginRight="48dp"
+            android:text="@{item.volumeInfo.description}"
+            tools:text="Description"/>
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_description"
+            android:layout_alignLeft="@id/tv_title"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="48dp"
+            android:text="@{item.volumeInfo.authors[0]}"
+            tools:text="author"/>
+
+        <ImageView
+            android:id="@+id/iv_bookmark"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            tools:src="@drawable/ic_star_inactive_24dp"
+            android:layout_alignParentRight="true"
+            />
+<!--TODO: 북마크 고치기, 작가 목록 출력 고치기-->
+<!--        android:src="@{viewModel.isBookMarked().booleanValue() ? @drawable/ic_bookmark_active_24dp : @drawable/ic_bookmark_inactive_24dp}"-->
+<!--        android:onClick="@{() -> viewModel.saveBookMark()}"-->
+
+    </RelativeLayout>
+</layout>
