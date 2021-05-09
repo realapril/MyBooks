@@ -17,7 +17,6 @@ class FavBookFragment : Fragment() {
     private lateinit var listAdapter: BookListAdapter
     private lateinit var viewDataBinding : FragmentFavBookBinding
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

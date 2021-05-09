@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.tistory.realapril.mybooks.entity.Item
 
-@androidx.room.Database(entities = [Item::class], version = 1, exportSchema = false)
+@androidx.room.Database(entities = [Item::class], version = 2, exportSchema = false)
 abstract class Database : RoomDatabase() {
 
     abstract fun bookDao() : BookDao
@@ -22,9 +22,8 @@ abstract class Database : RoomDatabase() {
                     context.applicationContext,
                     Database::class.java,
                     "book_database"
-                )
-                    .fallbackToDestructiveMigration()
-                    .build()
+                ).fallbackToDestructiveMigration()
+                 .build()
                 INSTANCE = instance
                 instance
             }

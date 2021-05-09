@@ -38,6 +38,7 @@ class BookViewModel(
 
     init {
         loadBooks()
+        getLocalBookmarks()
     }
 
     fun loadBooks(){
