@@ -15,7 +15,7 @@ class BookApiSourceImpl(
     suspend fun getBooks() : Response<BookInfo> = withContext(ioDispatcher) {
         bookApiSource.getBooks(
             "android"
-            ,30
+            ,40
             , "totalItems,items(id,volumeInfo/title,volumeInfo/description,volumeInfo/authors,volumeInfo/imageLinks/thumbnail)"
         )
     }

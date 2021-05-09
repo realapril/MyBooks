@@ -13,6 +13,19 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val viewModelModule = module {
-    viewModel { BookViewModel(get(), get(), get(),get()) }
+
+
+val appModule = module {
+
+    single { BookLocalDataSource(Database.getDatabase(androidContext()).bookDao()) }
+    //Room
+    single { SaveBookMarkUseCase(get()) }
+    single { DeleteBookMarkUseCase(get()) }
+    single { GetBookMarkUseCase(get()) }
+    single { BookRepository(get(),get()) }
+
+    //Network
+    single { BookApiSourceImpl(get()) }
+    single { GetBooksUseCase(get()) }
+
 }
