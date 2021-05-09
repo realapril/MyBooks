@@ -50,6 +50,5 @@ class ListBookFragment : Fragment() {
         bViewModel.bookList.observe(viewLifecycleOwner, Observer {
             listAdapter.submitList(it)
         })
-
     }
 }

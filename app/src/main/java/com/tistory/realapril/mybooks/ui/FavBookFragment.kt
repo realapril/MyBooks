@@ -5,38 +5,52 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.tistory.realapril.mybooks.R
+import com.tistory.realapril.mybooks.databinding.FragmentFavBookBinding
+import com.tistory.realapril.mybooks.databinding.FragmentListBookBinding
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FavBookFragment : Fragment() {
+    private val bViewModel by sharedViewModel<BookViewModel>()
+    private lateinit var listAdapter: BookListAdapter
+    private lateinit var viewDataBinding : FragmentFavBookBinding
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fav_book, container, false)
+        viewDataBinding = FragmentFavBookBinding.inflate(inflater, container, false).apply {
+            viewmodel = bViewModel
+            lifecycleOwner = this@FavBookFragment
+        }
+        listAdapter = BookListAdapter(bViewModel)
+        viewDataBinding.rvConcerts.apply {
+            adapter = listAdapter
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        }
+
+        // Listener of scrollview, To paging the list when the list touches the floor
+        viewDataBinding.scrollView.viewTreeObserver.addOnScrollChangedListener {
+            val positionOfScroll = viewDataBinding.scrollView.scrollY
+            val last_position = viewDataBinding.scrollView.getChildAt(0).bottom - viewDataBinding.scrollView.height
+
+            if(positionOfScroll == last_position) {
+                // Call the next part of the list
+                // I do not handle a paging of the list here :)
+            }
+        }
+        return viewDataBinding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FavBookFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FavBookFragment().apply {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
-            }
+        // Observe a list of books
+        bViewModel.bookMarkList.observe(viewLifecycleOwner, Observer {
+            listAdapter.submitList(it)
+        })
     }
 }
