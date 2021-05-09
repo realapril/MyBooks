@@ -4,10 +4,10 @@ import com.tistory.realapril.mybooks.data.BookRepository
 import com.tistory.realapril.mybooks.entity.Item
 
 class DeleteBookMarkUseCase(
-    private val concertRepository: BookRepository
+    private val bookRepository: BookRepository
 ) {
     suspend operator fun invoke(item: Item){
-        concertRepository.deleteBookMark(item = item)
+        bookRepository.deleteBookMark(item = item)
     }
 
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.tistory.realapril.mybooks.R
 import com.tistory.realapril.mybooks.databinding.FragmentFavBookBinding
 import com.tistory.realapril.mybooks.databinding.FragmentListBookBinding
@@ -25,8 +26,12 @@ class FavBookFragment : Fragment() {
             viewmodel = bViewModel
             lifecycleOwner = this@FavBookFragment
         }
+
         listAdapter = BookListAdapter(bViewModel)
-        viewDataBinding.rvConcerts.apply {
+        // remember last scroll position
+        listAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+
+        viewDataBinding.rvBooks.apply {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         }

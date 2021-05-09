@@ -8,7 +8,7 @@ import com.tistory.realapril.mybooks.entity.Item
 @Dao
 interface BookDao {
 
-    @Query("SELECT * FROM fav_bookmark ORDER BY id DESC")
+    @Query("SELECT * FROM fav_bookmark")
     fun getAllBookMarks() : List<Item>
 
     @Query("SELECT * FROM fav_bookmark WHERE id=:id")
