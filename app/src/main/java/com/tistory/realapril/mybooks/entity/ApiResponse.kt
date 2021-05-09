@@ -8,25 +8,25 @@ data class ApiResponse(
 )
 
 data class BookInfo(
-    val items: List<Item> = mutableListOf(),
-    val totalItems: Int =0,
+    var items: List<Item> = mutableListOf(),
+    var totalItems: Int =0,
 )
 
 @TypeConverters(Converters::class)
 @Entity(tableName = "fav_bookmark")
 data class Item(
-    @PrimaryKey @ColumnInfo(name = "id") val id: String,
+    @PrimaryKey @ColumnInfo(name = "id") var id: String,
     @ColumnInfo(name = "isBookmarked") var isBookmarked: Boolean?,
-    @Embedded val volumeInfo: VolumeInfo
+    @Embedded var volumeInfo: VolumeInfo
 )
 
 data class ImageLinks(
-    @ColumnInfo(name = "thumbnail") val thumbnail: String
+    @ColumnInfo(name = "thumbnail") var thumbnail: String
 )
 
 data class VolumeInfo(
-    @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "authors") val authors: List<String>,
-    @ColumnInfo(name = "description") val description: String,
-    @Embedded val imageLinks: ImageLinks,
+    @ColumnInfo(name = "title") var title: String,
+    @ColumnInfo(name = "authors") var authors: List<String>,
+    @ColumnInfo(name = "description") var description: String,
+    @Embedded var imageLinks: ImageLinks,
 )

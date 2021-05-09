@@ -52,6 +52,7 @@ class BookViewModel(
         viewModelScope.launch {
             val result = getBooksUseCase.invoke()
             if(result is Result.Success) {
+                Log.e("결과", result.data.apiBody.toString())
                 _bookList.value = result.data.apiBody.items
                 _bookResponse.value = result.data
             }
