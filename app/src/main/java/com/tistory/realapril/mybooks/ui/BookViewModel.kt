@@ -2,9 +2,7 @@ package com.tistory.realapril.mybooks.ui
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.tistory.realapril.mybooks.domain.DeleteBookMarkUseCase
-import com.tistory.realapril.mybooks.domain.GetBookMarkUseCase
-import com.tistory.realapril.mybooks.domain.SaveBookMarkUseCase
+import com.tistory.realapril.mybooks.domain.*
 import com.tistory.realapril.mybooks.entity.ImageLinks
 import com.tistory.realapril.mybooks.entity.Item
 import com.tistory.realapril.mybooks.entity.VolumeInfo
@@ -12,12 +10,20 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
+import com.tistory.realapril.mybooks.data.Result
+import com.tistory.realapril.mybooks.entity.ApiResponse
+
 
 class BookViewModel(
     private val saveBookMarkUseCase: SaveBookMarkUseCase,
     private val deleteBookMarkUseCase: DeleteBookMarkUseCase,
-    private val getBookMarkUseCase: GetBookMarkUseCase
+    private val getBookMarkUseCase: GetBookMarkUseCase,
+    private val getBooksUseCase: GetBooksUseCase
 ) : ViewModel() {
+    // LiveData of whole performance response from public API
+    private val _bookResponse = MutableLiveData<ApiResponse>()
+    val bookResponse: LiveData<ApiResponse> = _bookResponse
+
     private var _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
@@ -37,14 +43,18 @@ class BookViewModel(
     val bookMarkList: LiveData<List<Item>> = _bookMarkList
 
     init {
-        loadBooks()
+        loadRemoteBooks()
         getLocalBookmarks()
     }
 
-    fun loadBooks(){
+    fun loadRemoteBooks(){
         _dataLoading.value = true
         viewModelScope.launch {
-            _bookList.value = setTestData()
+            val result = getBooksUseCase.invoke()
+            if(result is Result.Success) {
+                _bookList.value = result.data.apiBody.items
+                _bookResponse.value = result.data
+            }
             _dataLoading.value = false
         }
     }

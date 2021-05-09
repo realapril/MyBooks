@@ -1,16 +1,27 @@
 package com.tistory.realapril.mybooks.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.tistory.realapril.mybooks.entity.Item
 import com.tistory.realapril.mybooks.local.BookLocalDataSource
 import com.tistory.realapril.mybooks.data.Result
+import com.tistory.realapril.mybooks.entity.ApiResponse
+import com.tistory.realapril.mybooks.remote.BookApiSourceImpl
 import kotlinx.coroutines.*
 
 class BookRepository(
     private val bookLocalDataSource: BookLocalDataSource,
+    private val bookApiSourceImpl: BookApiSourceImpl,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseDataSource() {
+
+    /**
+     * Get book information from Google API
+     * @return Result<ApiResponse>
+     * */
+    suspend fun getBooksFromNetwork(): Result<ApiResponse> {
+        return withContext(ioDispatcher){
+            getResult { bookApiSourceImpl.getBooks() }
+        }
+    }
 
     /**
      * Get the user's bookmark list from local storage(Room).
