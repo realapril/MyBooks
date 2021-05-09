@@ -47,7 +47,7 @@ class ListBookFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         // Observe a list of books
-        bViewModel.bookList2.observe(viewLifecycleOwner, Observer {
+        bViewModel.bookList.observe(viewLifecycleOwner, Observer {
             listAdapter.submitList(it)
         })
     }

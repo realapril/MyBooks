@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.tistory.realapril.mybooks.entity.Item
 
-@androidx.room.Database(entities = [Item::class], version = 3, exportSchema = false)
+@androidx.room.Database(entities = [Item::class], version = 5, exportSchema = false)
 abstract class Database : RoomDatabase() {
 
     abstract fun bookDao() : BookDao

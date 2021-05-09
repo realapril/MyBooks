@@ -35,6 +35,8 @@
             android:layout_marginRight="55dp"
             android:text="@{item.volumeInfo.title}"
             android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
             tools:text="Title"/>
         <TextView
             android:id="@+id/tv_description"
@@ -43,6 +45,8 @@
             android:layout_below="@id/tv_title"
             android:layout_alignLeft="@id/tv_title"
             android:layout_marginRight="55dp"
+            android:maxLines="3"
+            android:ellipsize="end"
             android:text="@{item.volumeInfo.description}"
             tools:text="Description"/>
         <TextView
@@ -54,6 +58,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="55dp"
             android:text="@{item.volumeInfo.authors[0]}"
+            android:maxLines="1"
+            android:ellipsize="end"
+
             tools:text="author"/>
 
         <ImageView

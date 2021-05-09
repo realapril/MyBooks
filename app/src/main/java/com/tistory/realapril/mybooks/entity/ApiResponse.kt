@@ -21,12 +21,12 @@ data class Item(
 )
 
 data class ImageLinks(
-    @ColumnInfo(name = "thumbnail") var thumbnail: String
+    @ColumnInfo(name = "thumbnail", defaultValue = "") var thumbnail: String
 )
 
 data class VolumeInfo(
-    @ColumnInfo(name = "title") var title: String,
-    @ColumnInfo(name = "authors") var authors: List<String>,
-    @ColumnInfo(name = "description") var description: String,
+    @ColumnInfo(name = "title", defaultValue = "") var title: String,
+    @ColumnInfo(name = "authors", defaultValue = "") var authors: List<String>,
+    @ColumnInfo(name = "description", defaultValue = "") var description: String,
     @Embedded var imageLinks: ImageLinks,
 )

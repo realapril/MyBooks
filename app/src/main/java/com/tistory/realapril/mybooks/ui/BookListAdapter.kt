@@ -36,9 +36,11 @@ class BookListAdapter(private val viewModel: BookViewModel) : ListAdapter<Item, 
          * */
         override fun onClick(v: View?) {
             binding.item?.let {
-                viewModel.saveBookMark(it)
+                viewModel.saveBookMark(it, adapterPosition)
             }
+
         }
+
 
         companion object {
             fun from(parent: ViewGroup, viewModel: BookViewModel) : ViewHolder {
