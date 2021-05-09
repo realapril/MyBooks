@@ -24,8 +24,13 @@ class BookViewModel(
     private var _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private var _bookList = MutableLiveData<List<Item>>()
-    val bookList: LiveData<List<Item>> = _bookList
+    // LiveData of all books saved in Room
+//    private var _bookList = MutableLiveData<List<Item>>()
+//    val bookList: LiveData<List<Item>> = _bookList
+
+    private var _bookList2 = MutableLiveData<List<Item>>()
+    val bookList2: LiveData<List<Item>> = _bookList2
+
 
     // LiveData of the item the user selects from the list.
     private var _selectedConcertItem = MutableLiveData<Item>()
@@ -49,9 +54,16 @@ class BookViewModel(
         viewModelScope.launch {
             val result = getBooksUseCase.invoke()
             if(result is Result.Success) {
-                Log.e("결과", result.data.toString())
-                _bookList.value = result.data.items
+                //_bookList.value = result.data.items
                 _bookResponse.value = result.data
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    var value = result.data.items!!.map {
+                        Item(it.id, getBookMarkUseCase.isItemBookMarked(it), it.volumeInfo)
+                    }
+                    Log.e("결과", value.toString())
+                    _bookList2.postValue(value)
+                }
             }
             _dataLoading.value = false
         }
@@ -61,17 +73,6 @@ class BookViewModel(
         CoroutineScope(Dispatchers.IO).launch {
             _bookMarkList.postValue(getBookMarkUseCase.getAllBookMarks())
         }
-    }
-
-    private fun setTestData(): ArrayList<Item>{
-        val items: ArrayList<Item> = ArrayList()
-        val vol = VolumeInfo("Head First Android Development", arrayListOf("a","u"),"최신 인지과학 어쩌", ImageLinks("http://books.google.com/books/content?id=mtRmDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"))
-        items.add(Item("mtRmDwAAQBAJ", null, vol))
-
-        val vol2 = VolumeInfo("안드 빠른시작 안내", arrayListOf("Google"),"ANDROID 빠른 시작 안내서, Android 모바일 기술 플랫폼", ImageLinks("http://books.google.com/books/content?id=ayv3AgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"))
-        items.add(Item("ayv3AgAAQBAJ", null, vol2))
-
-        return items
     }
 
     fun saveBookMark(item: Item) {
@@ -93,9 +94,7 @@ class BookViewModel(
 
                 var res = getBookMarkUseCase.isItemBookMarked(item)
                 Log.e("saveBookmark 저장",res.toString())
-//                var _bookList= Transformations.map(bookList) {
-//                    it.forEach { item-> getBookMarkUseCase.isItemBookMarked(item) }
-//                }
+
                 getLocalBookmarks()
 
             }

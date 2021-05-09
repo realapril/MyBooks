@@ -28,4 +28,5 @@ class GetBookMarkUseCase(
         val result = bookRepository.getAllBookMarks()
         return result
     }
+
 }
