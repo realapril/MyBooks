@@ -1,6 +1,5 @@
 package com.tistory.realapril.mybooks.ui
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.tistory.realapril.mybooks.domain.*
 import kotlinx.coroutines.CoroutineScope
@@ -23,11 +22,11 @@ class BookViewModel(
 
     // LiveData of all books got from server
     private var _bookList = MutableLiveData<List<Item>>()
+    private lateinit var _bookListCache : List<Item>
     val bookList: LiveData<List<Item>> = _bookList
 
     // LiveData of list of the user's bookmark.
     private var _bookMarkList = MutableLiveData<List<Item>>()
-    private lateinit var _bookMarkListCache : List<Item>
     val bookMarkList: LiveData<List<Item>> = _bookMarkList
 
     private var _dataLoading = MutableLiveData<Boolean>()
@@ -46,10 +45,10 @@ class BookViewModel(
             if(result is Result.Success) {
                 _bookResponse.value = result.data
 
-                _bookMarkListCache = result.data.items!!.map {
+                _bookListCache = result.data.items!!.map {
                     Item(it.id, getBookMarkUseCase.isItemBookMarked(it), it.volumeInfo)
                 }
-                _bookList.postValue(_bookMarkListCache)
+                _bookList.postValue(_bookListCache)
             }
             _dataLoading.value = false
         }
@@ -61,36 +60,33 @@ class BookViewModel(
         }
     }
 
-    fun saveBookMark(item: Item, idx: Int) {
-        var item_ = item
-
-            viewModelScope.launch {
-                var changedBookmark = false;
+    fun saveBookMark(item: Item) {
+        var _item = item.copy()
+        viewModelScope.launch {
                 // Check already bookmarked or not or null
                 // Already bookmarked => remove it.
                 when(item.isBookmarked) {
                     true -> {
-                        item_.isBookmarked = false
-                        changedBookmark = false
+                        _item.isBookmarked = false
                         deleteBookMarkUseCase.invoke(item)
                     }
                     else ->{
-                        item_.isBookmarked = true
-                        changedBookmark = true
-                        saveBookMarkUseCase.invoke(item_)
+                        _item.isBookmarked = true
+                        saveBookMarkUseCase.invoke(_item)
                     }
                 }
-
+                updateListBooks()
                 getLocalBookmarks()
-                updateListBooks(idx, changedBookmark)
-                Log.e("클릭", idx.toString())
             }
     }
 
-    fun updateListBooks(idx: Int, changedBookmark: Boolean){
+    fun updateListBooks(){
         CoroutineScope(Dispatchers.IO).launch {
-            _bookMarkListCache[idx].isBookmarked =changedBookmark
-            _bookList.postValue(_bookMarkListCache)
+            _bookListCache = _bookListCache.map {
+                Item(it.id, getBookMarkUseCase.isItemBookMarked(it), it.volumeInfo)
+            }
+            _bookList.postValue(_bookListCache)
         }
+
     }
 }

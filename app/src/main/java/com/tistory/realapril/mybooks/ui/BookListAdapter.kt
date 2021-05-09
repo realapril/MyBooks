@@ -36,9 +36,8 @@ class BookListAdapter(private val viewModel: BookViewModel) : ListAdapter<Item, 
          * */
         override fun onClick(v: View?) {
             binding.item?.let {
-                viewModel.saveBookMark(it, adapterPosition)
+                viewModel.saveBookMark(it)
             }
-
         }
 
 
