@@ -36,7 +36,7 @@ class BookListAdapter(private val viewModel: BookViewModel) : ListAdapter<Item, 
          * */
         override fun onClick(v: View?) {
             binding.item?.let {
-//                viewModel.clickConcertItem(it)
+                viewModel.saveBookMark(it)
             }
         }
 

@@ -32,8 +32,8 @@ class ListBookFragment : Fragment() {
 
         // Listener of scrollview, To paging the list when the list touches the floor
         viewDataBinding.scrollView.viewTreeObserver.addOnScrollChangedListener {
-            val positionOfScroll = viewDataBinding.scrollView!!.scrollY
-            val last_position = viewDataBinding.scrollView!!.getChildAt(0).bottom - viewDataBinding.scrollView!!.height
+            val positionOfScroll = viewDataBinding.scrollView.scrollY
+            val last_position = viewDataBinding.scrollView.getChildAt(0).bottom - viewDataBinding.scrollView.height
 
             if(positionOfScroll == last_position) {
                 // Call the next part of the list
