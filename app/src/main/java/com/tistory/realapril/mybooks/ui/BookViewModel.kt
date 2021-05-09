@@ -3,15 +3,12 @@ package com.tistory.realapril.mybooks.ui
 import android.util.Log
 import androidx.lifecycle.*
 import com.tistory.realapril.mybooks.domain.*
-import com.tistory.realapril.mybooks.entity.ImageLinks
-import com.tistory.realapril.mybooks.entity.Item
-import com.tistory.realapril.mybooks.entity.VolumeInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 import com.tistory.realapril.mybooks.data.Result
-import com.tistory.realapril.mybooks.entity.ApiResponse
+import com.tistory.realapril.mybooks.entity.*
 
 
 class BookViewModel(
@@ -21,8 +18,8 @@ class BookViewModel(
     private val getBooksUseCase: GetBooksUseCase
 ) : ViewModel() {
     // LiveData of whole performance response from public API
-    private val _bookResponse = MutableLiveData<ApiResponse>()
-    val bookResponse: LiveData<ApiResponse> = _bookResponse
+    private val _bookResponse = MutableLiveData<BookInfo>()
+    val bookResponse: LiveData<BookInfo> = _bookResponse
 
     private var _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
@@ -52,8 +49,8 @@ class BookViewModel(
         viewModelScope.launch {
             val result = getBooksUseCase.invoke()
             if(result is Result.Success) {
-                Log.e("결과", result.data.apiBody.toString())
-                _bookList.value = result.data.apiBody.items
+                Log.e("결과", result.data.toString())
+                _bookList.value = result.data.items
                 _bookResponse.value = result.data
             }
             _dataLoading.value = false

@@ -1,12 +1,10 @@
 package com.tistory.realapril.mybooks.remote
 
-import com.tistory.realapril.mybooks.entity.ApiResponse
+import com.tistory.realapril.mybooks.entity.BookInfo
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class BookApiSourceImpl(
@@ -14,7 +12,7 @@ class BookApiSourceImpl(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    suspend fun getBooks() : Response<ApiResponse> = withContext(ioDispatcher) {
+    suspend fun getBooks() : Response<BookInfo> = withContext(ioDispatcher) {
         bookApiSource.getBooks(
             "android"
             ,30

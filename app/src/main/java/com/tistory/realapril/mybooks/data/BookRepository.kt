@@ -2,8 +2,7 @@ package com.tistory.realapril.mybooks.data
 
 import com.tistory.realapril.mybooks.entity.Item
 import com.tistory.realapril.mybooks.local.BookLocalDataSource
-import com.tistory.realapril.mybooks.data.Result
-import com.tistory.realapril.mybooks.entity.ApiResponse
+import com.tistory.realapril.mybooks.entity.BookInfo
 import com.tistory.realapril.mybooks.remote.BookApiSourceImpl
 import kotlinx.coroutines.*
 
@@ -17,7 +16,7 @@ class BookRepository(
      * Get book information from Google API
      * @return Result<ApiResponse>
      * */
-    suspend fun getBooksFromNetwork(): Result<ApiResponse> {
+    suspend fun getBooksFromNetwork(): Result<BookInfo> {
         return withContext(ioDispatcher){
             getResult { bookApiSourceImpl.getBooks() }
         }

@@ -1,6 +1,6 @@
 package com.tistory.realapril.mybooks.remote
 
-import com.tistory.realapril.mybooks.entity.ApiResponse
+import com.tistory.realapril.mybooks.entity.BookInfo
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -14,7 +14,7 @@ interface BookApiSource {
     suspend fun getBooks( @Query("q") keyWord: String,
     @Query("maxResults") maxResults: Int,
     @Query("fields") fields: String
-    ):Response<ApiResponse>
+    ):Response<BookInfo>
 
 
 }

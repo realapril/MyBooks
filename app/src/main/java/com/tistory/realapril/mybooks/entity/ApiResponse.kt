@@ -3,9 +3,9 @@ package com.tistory.realapril.mybooks.entity
 import androidx.room.*
 import com.tistory.realapril.mybooks.utils.Converters
 
-data class ApiResponse(
-    var apiBody: BookInfo = BookInfo()
-)
+//data class ApiResponse(
+//    var apiBody: BookInfo = BookInfo()
+//)
 
 data class BookInfo(
     var items: List<Item> = mutableListOf(),
