@@ -1,7 +1,6 @@
 package com.tistory.realapril.mybooks.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,47 +8,40 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tistory.realapril.mybooks.databinding.ItemBookListBinding
 import com.tistory.realapril.mybooks.entity.Item
 
-class BookListAdapter(private val viewModel: BookViewModel) : ListAdapter<Item, BookListAdapter.ViewHolder>(MyPageDiffCallback()) {
+class BookListAdapter(val clickListener: ClickListener) : ListAdapter<Item, BookListAdapter.ViewHolder>(MyPageDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent, viewModel)
+        return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
-    class ViewHolder private constructor(val binding: ItemBookListBinding, private val viewModel: BookViewModel) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
-        init {
-            binding.root.setOnClickListener(this)
-        }
+    class ViewHolder private constructor(val binding: ItemBookListBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: Item) {
+        fun bind(item: Item, clickListener: ClickListener) {
             binding.item = item
+            binding.clickListener = clickListener
             binding.executePendingBindings()
-        }
-
-        /**
-         * When click a performance item from performance list,
-         * Go to a detail page of item
-         * */
-        override fun onClick(v: View?) {
-            binding.item?.let {
-                viewModel.saveBookMark(it)
-            }
         }
 
 
         companion object {
-            fun from(parent: ViewGroup, viewModel: BookViewModel) : ViewHolder {
+            fun from(parent: ViewGroup) : ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ItemBookListBinding.inflate(layoutInflater, parent, false)
 
-                return ViewHolder(binding, viewModel)
+                return ViewHolder(binding)
             }
         }
     }
+
+    class ClickListener(val clickListener: (item: Item) -> Unit) {
+        fun onClick(item: Item) = clickListener(item)
+    }
+
 }
 
 class MyPageDiffCallback : DiffUtil.ItemCallback<Item>() {

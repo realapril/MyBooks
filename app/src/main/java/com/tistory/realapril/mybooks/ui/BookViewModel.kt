@@ -1,5 +1,7 @@
 package com.tistory.realapril.mybooks.ui
 
+import android.util.Log
+import android.view.View
 import androidx.lifecycle.*
 import com.tistory.realapril.mybooks.domain.*
 import kotlinx.coroutines.CoroutineScope
